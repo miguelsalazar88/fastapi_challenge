@@ -2,8 +2,6 @@ import pandas as pd
 import pyarrow.parquet as pq
 from pathlib import Path
 
-
-
 df = None
 
 def load_data():
