@@ -7,7 +7,7 @@ import utils.data_formatting as formatting
 router = APIRouter()
 
 @router.get("/by_employee")
-def get_sales_by_employee(key_employee: int, start_date: str, end_date: str):
+def get_sales_by_employee(key_employee: str, start_date: str, end_date: str):
     
     df = get_sales_data()
     
@@ -21,7 +21,7 @@ def get_sales_by_employee(key_employee: int, start_date: str, end_date: str):
     return result.to_dict(orient="records")
 
 @router.get("/by_product")
-def get_sales_by_product(key_product: int, start_date: str, end_date: str):
+def get_sales_by_product(key_product: str, start_date: str, end_date: str):
 
     df = get_sales_data()
 
@@ -42,6 +42,17 @@ def get_sales_by_store(key_store: str, start_date: str, end_date: str):
                 (df["KeyDate"] >= start_date) &
                 (df["KeyDate"] <= end_date)]
     return result.to_dict(orient="records")
+
+@router.get("/total_average_by_store")
+def get_total_average_by_store(key_store: str):
+    df = get_sales_data()
+    key_store = formatting.add_pipe(key_store)
+    total_sales = df[df["KeyStore"]== key_store]["CostAmount"].sum()
+    average_sales = df[df["KeyStore"]== key_store]["CostAmount"].mean()
+    
+
+    return {"total_sales": total_sales,
+            "average_sales": average_sales}
 
 
 
