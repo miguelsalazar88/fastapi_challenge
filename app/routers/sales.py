@@ -27,6 +27,10 @@ def get_total_average_by_store(key_store: str):
 def get_total_average_by_product(key_product: str):
     return sales_service.get_total_average_by_product(key_product)
 
+@router.get("/total_average_by_employee")
+def get_total_average_by_employee(key_employee: str):
+    return sales_service.get_total_average_by_employee(key_employee)
+
 
 
     
